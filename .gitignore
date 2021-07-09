@@ -1,1 +1,6 @@
-secrets.py
+#Secrets
+secret.py
+
+#Env
+.env
+
