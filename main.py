@@ -7,6 +7,7 @@ from PIL import Image, ImageTk
 
 quote_font = ("Noto Mono Bold", 30)
 style_font = ("Noto Mono Bold", 35)
+weather_font = ("Noto Mono Bold", 30)
 
 
 
@@ -21,12 +22,9 @@ class MagicMirror(Frame):
         
         self.screen_width = self.master.winfo_screenwidth()
         self.screen_height = self.master.winfo_screenheight()
-        self.quoteFrame = Frame(self.master, background='black')
-        # self.topFrame = Frame(self.master, bg = 'black', width=screen_width/3 , height=screen_height/3)
-        # self.btmFrame = Frame(self.master, bg = 'black', width=screen_width/3 , height=screen_height/3)
-        # self.mdlFrame = Frame(self.master, bg = 'black', width=screen_width/3 , height=screen_height/3)
+        
+        self.draw_frame() 
 
-        self.quoteFrame.grid(row=3, column=0, columnspan=3)
         self.master.grid_columnconfigure(1, weight = 1)
         self.master.grid_rowconfigure(3, weight = 1)
 
@@ -34,6 +32,13 @@ class MagicMirror(Frame):
         self.grid_widgets()
 
         self.time()
+
+    def draw_frame(self): 
+        self.quoteFrame = Frame(self.master, background='black')
+        self.grid_frame()
+
+    def grid_frame(self):
+        self.quoteFrame.grid(row=3, column=0, columnspan=3)
 
 
     def draw_widgets(self):
@@ -48,8 +53,8 @@ class MagicMirror(Frame):
         self.oura_sleep_label = Label(self.master, text="Oura", background='black', foreground='white',font=style_font)
         self.oura_score_label = Label(self.master, text="Oura", background='black', foreground='white',font=style_font)
         
-        self.quote_label = Message(self.quoteFrame, text="Quote", width = round(self.screen_width/3), background='black', foreground='white', font=quote_font)
-        self.quote_author_label = Label(self.quoteFrame, text="Author", background='black', foreground='white', font=quote_font)
+        self.quote_label = Message(self.quoteFrame, text="Quote", width = round(self.screen_width/3), background='black', foreground='white', font=weather_font)
+        self.quote_author_label = Label(self.quoteFrame, text="Author", background='black', foreground='white', font=weather_font)
     def grid_widgets(self):
         self.clock_label.grid(row = 0, column = 0, sticky = W, pady = 2, padx=30)
         self.date_label.grid(row=0, column=1, sticky= EW, padx = 20, pady = 2)
@@ -97,7 +102,7 @@ class MagicMirror(Frame):
         quoteOfTheHour = quotes.quote_request()
         print(quoteOfTheHour)
         self.quote_label.config(text = f"{quoteOfTheHour['quote']}")
-        self.quote_author_label.config(text= f"-{quoteOfTheHour['author']}")
+        self.quote_author_label.config(text= f"- {quoteOfTheHour['author']}")
         self.quote_label.after(3600000, self.quote_update)
 
 
