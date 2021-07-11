@@ -2,14 +2,17 @@ from tkinter import *
 
 from time import strftime
 from modules import weather, oura, quotes
-
+import os 
+import sys
 from PIL import Image, ImageTk
 
 quote_font = ("Noto Mono Bold", 30)
 style_font = ("Noto Mono Bold", 35)
 weather_font = ("Noto Mono Bold", 30)
 
-
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using :0.0')
+    os.environ.__setitem__('DISPLAY', ':0.0')
 
 class MagicMirror(Frame):
     def __init__(self, master=None):
@@ -53,7 +56,7 @@ class MagicMirror(Frame):
         self.oura_sleep_label = Label(self.master, text="Oura", background='black', foreground='white',font=style_font)
         self.oura_score_label = Label(self.master, text="Oura", background='black', foreground='white',font=style_font)
         
-        self.quote_label = Message(self.quoteFrame, text="Quote", width = round(self.screen_width/3), background='black', foreground='white', font=weather_font)
+        self.quote_label = Message(self.quoteFrame, text="Quote", width = round(self.screen_width/2), background='black', foreground='white', font=weather_font)
         self.quote_author_label = Label(self.quoteFrame, text="Author", background='black', foreground='white', font=weather_font)
     def grid_widgets(self):
         self.clock_label.grid(row = 0, column = 0, sticky = W, pady = 2, padx=30)
@@ -67,7 +70,7 @@ class MagicMirror(Frame):
         self.oura_sleep_label.grid(row = 6, column = 0, sticky = W, padx=30)
         self.oura_score_label.grid(row = 7, column = 0, sticky = W, padx=30, pady=(0,30))
         
-        self.quote_label.grid(sticky = NSEW)
+        self.quote_label.grid(sticky = EW)
         self.quote_author_label.grid(row=2, sticky=EW, pady= 20)
         
 
@@ -107,6 +110,7 @@ class MagicMirror(Frame):
 
 
 root = Tk()
+root.attributes('-fullscreen',True)
 app = MagicMirror(master=root)
 
 #SETUP
