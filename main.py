@@ -41,7 +41,7 @@ class MagicMirror(Frame):
         self.grid_frame()
 
     def grid_frame(self):
-        self.quoteFrame.grid(row=3, column=0, columnspan=3)
+        self.quoteFrame.grid(row=3, column=0, columnspan=4)
 
 
     def draw_widgets(self):
@@ -96,8 +96,8 @@ class MagicMirror(Frame):
     def oura_update(self):
         oura_data = oura.oura_ring()
         self.oura_day_label.config(text = oura_data['sleep_date'])
-        self.oura_score_label.config(text = oura_data['sleep_score'])
-        self.oura_sleep_label.config(text = oura_data['sleep_duration'])
+        self.oura_score_label.config(text = f"{oura_data['sleep_score']}/100")
+        self.oura_sleep_label.config(text = f"{oura_data['sleep_duration']} hours")
         self.oura_day_label.after(1800000, self.oura_update)
         
 
