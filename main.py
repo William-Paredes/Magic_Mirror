@@ -5,6 +5,7 @@ from modules import weather, oura, quotes
 import os 
 import sys
 from PIL import Image, ImageTk
+import calendar
 
 quote_font = ("Noto Mono Bold", 30)
 style_font = ("Noto Mono Bold", 35)
