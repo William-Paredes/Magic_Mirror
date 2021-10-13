@@ -38,11 +38,13 @@ class MagicMirror(Frame):
 
     def draw_frame(self): 
         self.quoteFrame = Frame(self.master, background='black')
+        self.sleepFrame = Frame(self.master, background='black')
         self.grid_frame()
 
     def grid_frame(self):
-        self.quoteFrame.grid(row=3, column=0, columnspan=4)
-
+        self.quoteFrame.grid(row=7, column=2, columnspan=2, sticky="SW")
+        self.sleepFrame.grid(row=7, column=0, sticky="SE")
+    
 
     def draw_widgets(self):
         self.clock_label =  Label(self.master, text="Time", background='black', foreground='white',font=style_font)
@@ -52,12 +54,13 @@ class MagicMirror(Frame):
         self.weather_label = Label(self.master, text="Current Weather", background='black', foreground='white',font=style_font)
         self.weather_description = Label(self.master, text="Weather Description", foreground='white', background='black',font=style_font) 
         
-        self.oura_day_label = Label(self.master, text="Oura", background='black', foreground='white',font=style_font)
-        self.oura_sleep_label = Label(self.master, text="Oura", background='black', foreground='white',font=style_font)
-        self.oura_score_label = Label(self.master, text="Oura", background='black', foreground='white',font=style_font)
+        self.oura_day_label = Label(self.sleepFrame, text="Oura", background='black', foreground='white',font=style_font)
+        self.oura_sleep_label = Label(self.sleepFrame, text="Oura", background='black', foreground='white',font=style_font)
+        self.oura_score_label = Label(self.sleepFrame, text="Oura", background='black', foreground='white',font=style_font)
         
-        self.quote_label = Message(self.quoteFrame, text="Quote", width = round(self.screen_width/2), background='black', foreground='white', font=weather_font)
+        self.quote_label = Message(self.quoteFrame, text="Quote", width = round(self.screen_width/3), background='black', foreground='white', font=weather_font)
         self.quote_author_label = Label(self.quoteFrame, text="Author", background='black', foreground='white', font=weather_font)
+
     def grid_widgets(self):
         self.clock_label.grid(row = 0, column = 0, sticky = W, pady = 2, padx=30)
         self.date_label.grid(row=0, column=1, sticky= EW, padx = 20, pady = 2)
@@ -66,12 +69,12 @@ class MagicMirror(Frame):
         self.weather_label.grid(row = 0, column = 3, sticky = W, padx=(0,30), pady = 2)
         self.weather_description.grid(row = 2, column = 2, columnspan=2, sticky = E, padx=30)
         
-        self.oura_day_label.grid(row = 5, column = 0, sticky = W, padx=30)
-        self.oura_sleep_label.grid(row = 6, column = 0, sticky = W, padx=30)
-        self.oura_score_label.grid(row = 7, column = 0, sticky = W, padx=30, pady=(0,30))
+        self.oura_day_label.grid(row = 5, column = 0, sticky = SW)
+        self.oura_sleep_label.grid(row = 6, column = 0, sticky = SW)
+        self.oura_score_label.grid(row = 7, column = 0, sticky = SW)
         
-        self.quote_label.grid(sticky = EW)
-        self.quote_author_label.grid(row=2, sticky=EW, pady= 20)
+        self.quote_label.grid(row = 6, column = 2, sticky = E)
+        self.quote_author_label.grid(row=7, column = 2, sticky=E)
         
 
     def time(self):
@@ -95,6 +98,7 @@ class MagicMirror(Frame):
 
     def oura_update(self):
         oura_data = oura.oura_ring()
+        print(oura_data)
         self.oura_day_label.config(text = oura_data['sleep_date'])
         self.oura_score_label.config(text = f"{oura_data['sleep_score']}/100")
         self.oura_sleep_label.config(text = f"{oura_data['sleep_duration']} hours")

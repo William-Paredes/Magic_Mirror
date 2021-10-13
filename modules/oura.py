@@ -16,7 +16,7 @@ def oura_ring():
         sleep_night = datetime.datetime.strptime(day, "%Y-%m-%d")
         
         oura = {
-                'sleep_date': calendar.day_name[sleep_night.weekday() + 1],
+                'sleep_date': calendar.day_name[sleep_night.weekday()],
                 'sleep_score': response['sleep'][-1]['score'],
                 'sleep_duration': round((response['sleep'][-1]['total'] / 3600), 2)
             }
@@ -27,5 +27,5 @@ def oura_ring():
                 'sleep_score': "0",
                 'sleep_duration': "0"
             }
-            
+    print(oura) 
     return oura
